@@ -34,9 +34,15 @@ namespace FunnyProject.EventsHandler
             stats.Experience = e.Experience;
             stats.Level = e.Level;
             stats.Honor = e.Honnor;
-
-            position.X = e.X;
-            position.Y = e.Y;
+            Api.User.UserData.FactionId = e.FactionID;
+            lock (Api.User.Position)
+            {
+                position.Speed = e.Speed;
+                position.X = e.X;
+                position.Y = e.Y;
+                Console.WriteLine("X:" + position.X);
+                Console.WriteLine("Y: " + position.Y);
+            }
         }
     }
 }

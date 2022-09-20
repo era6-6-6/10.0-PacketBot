@@ -13,10 +13,15 @@ namespace FunnyProject
     {
         public int Uridium { get; set; }
         public string? Username { get; set; }
+        public string? Password { get; set; }
         public PacketManager? PacketManager { get; set; }
+
+        public UserData UserData = new();
         public Position Position = new();
         public Statistics Statistics = new();
         public Boxes Boxes = new();
+        public BasesPorts BasesPorts = new();
+        public Players Players = new();
 
     }
 }

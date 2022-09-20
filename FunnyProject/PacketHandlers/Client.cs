@@ -49,8 +49,10 @@ namespace FunnyProject.PacketHandlers
             {
                 while (IsConnected())
                 {
-                   
+                    if (Stream.DataAvailable)
+                    {
                         ParsePackets();
+                    }
                     
                 }
 
@@ -91,9 +93,9 @@ namespace FunnyProject.PacketHandlers
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
         }
 
