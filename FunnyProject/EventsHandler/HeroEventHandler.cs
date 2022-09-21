@@ -22,7 +22,18 @@ namespace FunnyProject.EventsHandler
             {
                 InitializeHero(HeroInitData);
             };
+            Api.User.PacketManager.OnHpUpdate += (s , e) =>
+            {
+                UpdateHeroHp(e);
+            };
+        
 
+        }
+
+        private void UpdateHeroHp(HpUpdate e)
+        {
+            Api.User.ShipInfo.Hp = e.Hp;
+            Api.User.ShipInfo.MaxHp = e.MaxHp;
         }
 
         private void InitializeHero(UserInitialize e)
@@ -35,13 +46,17 @@ namespace FunnyProject.EventsHandler
             stats.Level = e.Level;
             stats.Honor = e.Honnor;
             Api.User.UserData.FactionId = e.FactionID;
+            Api.User.ShipInfo.Hp = e.Hp;
+            Api.User.ShipInfo.MaxHp = e.MaxHp;
+            Api.User.ShipInfo.Shield = e.Shield;
+            Console.WriteLine("Hp: " + e.Hp);
+            Console.WriteLine("MaxHp: " + e.MaxHp);
             lock (Api.User.Position)
             {
                 position.Speed = e.Speed;
                 position.X = e.X;
                 position.Y = e.Y;
-                Console.WriteLine("X:" + position.X);
-                Console.WriteLine("Y: " + position.Y);
+             
             }
         }
     }

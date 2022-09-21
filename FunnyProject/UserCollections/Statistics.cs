@@ -13,5 +13,6 @@ namespace FunnyProject.UserCollections
         public double Honor { get; set; }
         public double Uridium { get; set; }
         public double Credits { get; set; }
+        public int CollectedUridium { get; internal set; }
     }
 }

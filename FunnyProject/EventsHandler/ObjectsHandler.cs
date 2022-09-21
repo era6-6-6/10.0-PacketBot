@@ -30,6 +30,7 @@ namespace FunnyProject.EventsHandler
 
         private void RemoveBox(RemoveBox e)
         {
+            if (e.Hash == Api.User.SelectedBox?.Hash) Api.User.SelectedBox = null;
             Api.User.Boxes.Remove(e.Hash);
         }
 

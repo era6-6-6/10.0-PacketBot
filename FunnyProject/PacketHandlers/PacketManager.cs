@@ -1,4 +1,6 @@
-﻿using FunnyProject.Commands.Read;
+﻿using FunnyProject.Commands.PacketSorter;
+using FunnyProject.Commands.Read;
+using FunnyProject.Commands.Write;
 using FunnyProject.EventsHandler;
 using Krypton_Core.Packets.Bytes;
 using System;
@@ -16,6 +18,7 @@ namespace FunnyProject.PacketHandlers
         public HeroEventHandler Hero { get; set; }
         public ObjectsHandler ObjHandler { get; set; }
         public PlayersEventHandler PlHandler { get; set; }
+        private SortPacket SortClass { get; set; }
         public PacketManager(Api api)
         {
             Api = api;
@@ -23,10 +26,12 @@ namespace FunnyProject.PacketHandlers
             Hero = new(Api);
             PlHandler = new(Api); 
             ObjHandler = new(Api);
+            SortClass = new(Api);
         }
         #region handlers
         //hero
         public event EventHandler<UserInitialize>? OnHeroInit;
+        public event EventHandler<HpUpdate>? OnHpUpdate;
 
         //resources
         public event EventHandler<BoxInitialize>? OnBoxInit;
@@ -45,16 +50,23 @@ namespace FunnyProject.PacketHandlers
         public override void Parse(EndianBinaryReader read)
         {
             var id = read.ReadInt16();
-            if (id != 4224)
-            {
-                Console.WriteLine("id: " + id);
-            }
+          
             switch(id)
             {
                 case UserInitialize.ID:
                     {
                         var hero = new UserInitialize(read);
                         OnHeroInit?.Invoke(this, hero);
+                        break;
+                    }
+                case 4224:
+                    {
+                        var message = read.ReadString();
+                        if(!message.Contains("0|n|s|end"))
+                        {
+                            SortClass.Sort(message);
+                            Console.WriteLine(message);
+                        }
                         break;
                     }
                 case BoxInitialize.ID:
@@ -97,6 +109,36 @@ namespace FunnyProject.PacketHandlers
                     {
                         var player = new PlayerMoved(read);
                         OnPlayerMove?.Invoke(this, player);
+                        break;
+                    }
+                case ShieldUpdate.ID:
+                    {
+                        ShieldUpdate shd = new(read);
+                        break;
+                    }
+                case HpUpdate.ID:
+                    {
+                        HpUpdate hp = new(read);
+                        OnHpUpdate?.Invoke(this, hp);
+                        break;
+                    }
+                case ShipInfoUpdate.ID:
+                    {
+                        ShipInfoUpdate ship = new(read);
+                        break;
+                    }
+                case 10114:
+                    {
+                        var repair = new RepairShip(Api);
+                        Send(repair);
+                        break;
+                    }
+                default:
+                    {
+                        if (id != 4224)
+                        {
+                            Console.WriteLine("id: " + id);
+                        }
                         break;
                     }
             }

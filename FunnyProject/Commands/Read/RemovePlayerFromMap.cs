@@ -24,7 +24,7 @@ namespace FunnyProject.Commands.Read
             UserID = param1.ReadInt32();
             UserID = (int)((uint)UserID >> 2 | (uint)UserID << 30);
             param1.ReadInt16();
-            Console.WriteLine("USERID:              " + UserID);
+           
         }
 
 

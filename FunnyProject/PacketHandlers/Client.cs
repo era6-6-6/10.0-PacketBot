@@ -39,7 +39,7 @@ namespace FunnyProject.PacketHandlers
                 Stream = TcpClient.GetStream();
                 Console.WriteLine("Got stream");
                 Task.Run(async () => await ListenForPackets());
-                Send(new Login());
+                
                 return;
             }
         }

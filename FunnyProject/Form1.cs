@@ -1,5 +1,7 @@
 using FunnyProject.GUIManagers;
 using FunnyProject.Interfaces;
+using FunnyProject.Logic;
+using FunnyProject.Logic.Interface;
 using FunnyProject.PacketHandlers;
 
 namespace FunnyProject
@@ -19,6 +21,7 @@ namespace FunnyProject
 
         private void LoginBtn_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("Login clicked");
             var api = new Api(new User());
             Api = api;
             Api.User.Username = UserNameBox.Text;
@@ -99,6 +102,17 @@ namespace FunnyProject
 
             Move.FlyToCorndinates((int)((double)e.X / ConvertX), (int)((double)e.Y / ConvertY));
             Console.WriteLine((int)(e.X * ConvertX));
+        }
+
+        private void StartBtn_Click(object sender, EventArgs e)
+        {
+            if (Api == null) return;
+            BoxLogic box = new BoxLogic(Api);
+            NpcKillerModule npc = new(Api);
+            npc.Running = true;
+            box.Running = true;
+            Task.Run(async() => await npc.StartMethod());
+            
         }
     }
 }

@@ -39,19 +39,26 @@ namespace FunnyProject.EventsHandler
         private void TweenPlayer(PlayerMoved e)
         {
             var player = Api.User.Players.AllPlayers.Find(x => x.ID == e.UserID);
-            if(player != null)
-                Api.Tweener.Tween(player , new { X = e.ToX, Y = e.ToY } , e.Duration);
-            Console.WriteLine("TOX: " + e.ToX + "toY: " + e.ToY);
+
+            if (player != null)
+            {
+                Api.Tweener.TargetCancel(player);
+                Api.Tweener.Tween(player, new { X = e.ToX, Y = e.ToY }, e.Duration);
+            }
+            
         }
 
         private void RemovePlayerFromMap(RemovePlayerFromMap e)
         {
             Api.User.Players.Remove(e.UserID);
+            if (e.UserID == Api.User.Target.ID) Api.User.Target = null;
         }
 
         private void RemovePlayer(RemovePlayer e)
         {
+            
             Api.User.Players.Remove(e.UserID);
+            if (e.UserID == Api.User.Target.ID) Api.User.Target = null;
         }
 
         private void InitPlayer(PlayerInit e)

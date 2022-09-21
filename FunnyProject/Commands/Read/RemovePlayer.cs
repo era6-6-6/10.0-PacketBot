@@ -20,7 +20,7 @@ namespace FunnyProject.Commands.Read
             UserID = (int)((uint)UserID << 5 | (uint)UserID >> 27);
             var uk = param1.ReadInt32();
             uk = (int)((uint)uk << 2| (uint)uk <<30 );
-            Console.WriteLine("uk =   " + uk);
+        
         }
     }
 }

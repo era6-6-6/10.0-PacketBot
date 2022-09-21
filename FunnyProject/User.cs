@@ -1,5 +1,7 @@
 ﻿using FunnyProject.PacketHandlers;
 using FunnyProject.UserCollections;
+using FunnyProject.UserCollections.Objects;
+using FunnyProject.UserCollections.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,11 @@ namespace FunnyProject
         public Boxes Boxes = new();
         public BasesPorts BasesPorts = new();
         public Players Players = new();
+        public ShipInfo ShipInfo = new();
+        
+
+        public Box? SelectedBox { get; set; }
+        public Player? Target { get; set; }
 
     }
 }

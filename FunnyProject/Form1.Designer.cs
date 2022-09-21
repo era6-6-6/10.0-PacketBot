@@ -32,6 +32,7 @@
             this.PasswordBox = new System.Windows.Forms.TextBox();
             this.UserNameBox = new System.Windows.Forms.TextBox();
             this.MinimapPanel = new System.Windows.Forms.Panel();
+            this.StartBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LoginBtn
@@ -68,11 +69,22 @@
             this.MinimapPanel.TabIndex = 3;
             this.MinimapPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MinimapPanel_MouseDown);
             // 
+            // StartBtn
+            // 
+            this.StartBtn.Location = new System.Drawing.Point(653, 118);
+            this.StartBtn.Name = "StartBtn";
+            this.StartBtn.Size = new System.Drawing.Size(75, 23);
+            this.StartBtn.TabIndex = 4;
+            this.StartBtn.Text = "Start";
+            this.StartBtn.UseVisualStyleBackColor = true;
+            this.StartBtn.Click += new System.EventHandler(this.StartBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.StartBtn);
             this.Controls.Add(this.MinimapPanel);
             this.Controls.Add(this.UserNameBox);
             this.Controls.Add(this.PasswordBox);
@@ -90,5 +102,6 @@
         private TextBox PasswordBox;
         private TextBox UserNameBox;
         private Panel MinimapPanel;
+        private Button StartBtn;
     }
 }

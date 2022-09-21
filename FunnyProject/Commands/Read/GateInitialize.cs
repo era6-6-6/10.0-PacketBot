@@ -32,12 +32,7 @@ namespace FunnyProject.Commands.Read
             Y = (int)((uint)Y >> 4 | (uint)Y << 28);
 
             //print all
-            Console.WriteLine("bool1 " + bool1);
-            Console.WriteLine("factionID: " + FactionId);
-            Console.WriteLine("something: " + something);
-            Console.WriteLine("something2: " + something2);
-            Console.WriteLine("X: " + X);
-            Console.WriteLine("Y: " + Y);
+           
 
         }
     }

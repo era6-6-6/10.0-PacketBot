@@ -28,7 +28,7 @@ namespace FunnyProject.EventsHandler
         private void OnBoxInit(Commands.Read.BoxInitialize e)
         {
             Api.User.Boxes.Add(new Box(e.Hash, e.X, e.Y, e.Type));
-            Console.WriteLine("Box: " + e.Type + " was added");
+            
         }
     }
 }
