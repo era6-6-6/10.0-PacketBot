@@ -12,7 +12,7 @@ namespace Krypton_Core
 
         public string lastUrl = "https://www.google.com";
 
-        public string userAgent = "BigpointClient/1.6.7";
+        public string userAgent = "PVPOnlyClient";
         public readonly CookieContainer cookies = new CookieContainer();
 
         private readonly WebHeaderCollection headers = new WebHeaderCollection();
@@ -20,20 +20,18 @@ namespace Krypton_Core
 
         public string Post(string url, string data , bool useProxy = false)
         {
-            
-           
-
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.AutomaticDecompression =
                 DecompressionMethods.Deflate | DecompressionMethods.GZip | DecompressionMethods.None;
             request.CookieContainer = cookies;
-           
-            request.UserAgent = userAgent;
+            
             request.Headers = headers;
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
             request.Referer = lastUrl;
+            request.UserAgent = "PVPOnlyClient";
+
 
             using (var writer = new StreamWriter(request.GetRequestStream()))
             {
@@ -41,6 +39,8 @@ namespace Krypton_Core
             }
 
             var response = (HttpWebResponse)request.GetResponse();
+            
+           
             lastUrl = response.ResponseUri.ToString();
             using (var reader = new StreamReader(response.GetResponseStream()))
             {

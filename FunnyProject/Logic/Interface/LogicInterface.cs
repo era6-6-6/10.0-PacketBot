@@ -152,6 +152,7 @@ namespace FunnyProject.Logic.Interface
             Api.Tweener.TargetCancel(Api.User.Position);
             Api.Tweener.Tween(Api.User.Position, new { X = Api.User.Position.TargetX, Y = Api.User.Position.TargetY }, durationMs)
                 .OnComplete(new System.Action(() => Api.User.Position.Moving = false));
+            
 
         }
         public void FlyToCorndinates(int x, int y)

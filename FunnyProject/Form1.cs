@@ -27,7 +27,13 @@ namespace FunnyProject
             Api.User.Username = UserNameBox.Text;
             Move = new(Api);
             Api.User.Password = PasswordBox.Text;
-            Task.Run(async () => await Api.StartSession());
+            var server = ServerCombo.SelectedItem.ToString();
+            LoginBtn.Visible = false;
+            
+            Task.Run(async () => await Api.StartSession(server));
+            ServerCombo.Visible = false;
+            UserNameBox.Visible = false;
+            PasswordBox.Visible = false;
             Task.Run(async () => await Render());
            
         }
@@ -80,8 +86,7 @@ namespace FunnyProject
         }
         public static void SetDoubleBuffered(System.Windows.Forms.Control c)
         {
-            //Taxes: Remote Desktop Connection and painting
-            //http://blogs.msdn.com/oldnewthing/archive/2006/01/03/508694.aspx
+          
             if (System.Windows.Forms.SystemInformation.TerminalServerSession)
                 return;
 
@@ -108,10 +113,11 @@ namespace FunnyProject
         {
             if (Api == null) return;
             BoxLogic box = new BoxLogic(Api);
+            FollowModule follow = new FollowModule(Api);
             NpcKillerModule npc = new(Api);
             npc.Running = true;
             box.Running = true;
-            Task.Run(async() => await npc.StartMethod());
+            Task.Run(async() => await box.StartMethod());
             
         }
     }

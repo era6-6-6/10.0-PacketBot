@@ -13,7 +13,7 @@ namespace FunnyProject.Logic.Interface
         public async Task StartMethod()
         {
             await Task.Delay(1000);
-            Api.User.PacketManager.Send(new Action("equipment_extra_cpu_cl04k-xl"));
+            Api.User.PacketManager?.Send(new Action("equipment_extra_cpu_cl04k-xl"));
             while (Running)
             {
                 try
@@ -64,7 +64,7 @@ namespace FunnyProject.Logic.Interface
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    
                 }
 
             }

@@ -52,14 +52,10 @@ namespace FunnyProject
             }
         }
 
-        public async Task StartSession()
+        public async Task StartSession(string server)
         {
-            await Login();
-            User.PacketManager = new(this);
-            User.PacketManager.Connect("198.50.228.28", 8080);
-            RegisterEvents();
-            
-            User.PacketManager.Send(new Login(userId: User.UserData.ID , SessionID: User.UserData.SID));
+            await Login(server);
+           
             
         }
 
@@ -71,35 +67,99 @@ namespace FunnyProject
             User.PacketManager.PlHandler.RegisterEvents();
         }
 
-        private async Task Login()
+        private async Task Login(string server)
+        {
+           switch(server)
+            {
+                case "starzone":
+                     StarZone();
+                    break;
+                case "oneultimate":
+                      //OneUltimate();
+                    break;
+                case "finalorbit":
+                    AncientOrbit();
+                    break;
+                case "ancientorbit":
+                    AncientOrbit();
+                    break;
+            }
+            await Task.CompletedTask;
+        }
+
+      
+
+        private void FinalOrbit()
+        {
+            throw new NotImplementedException();
+        }
+
+   
+
+        private async void StarZone()
         {
             Client.Get("https://starzone.se");
             string loginString = $"username={User.Username}&password={User.Password}&action=login";
-            var response = Client.Post("https://starzone.se/api" , loginString);
+            var response = Client.Post("https://starzone.se/api", loginString);
             if (response.Contains("{\"status\":true,\""))
             {
                 Console.WriteLine("Logged in waiting 5s ");
                 await Task.Delay(5000);
             }
-            await GetData();
-        }
-        private async Task GetData()
-        {
-            string SID; 
-            var response = Client.Get("https://starzone.se/map");
+            
+            string SID;
+            response = Client.Get("https://starzone.se/map");
             Match match = Regex.Match(response, "\"sessionID\": \"(.*?)\",");
-            if(match.Success)
+            if (match.Success)
             {
                 User.UserData.SID = match.Groups[1].Value;
                 Console.WriteLine("got sid: " + User.UserData.SID);
             }
-            
+
             match = Regex.Match(response, "\"userID\": \"(.*?)\",");
-            if(match.Success)
+            if (match.Success)
             {
                 Console.WriteLine("got id: " + match.Groups[1].Value);
                 User.UserData.ID = int.Parse(match.Groups[1].Value);
             }
+            User.PacketManager = new(this);
+            User.PacketManager.Connect("198.50.228.28", 8080);
+            RegisterEvents();
+
+            User.PacketManager.Send(new Login(userId: User.UserData.ID, SessionID: User.UserData.SID));
+        }
+      
+        private async void AncientOrbit()
+        {
+            Client.userAgent = "PVPOnlyClient";
+            var str = Client.Get("https://www.ancient-orbit.de/");
+            string loginString = $"username={User.Username}&password={User.Password}&action=login";
+            Console.WriteLine(str);
+            var response = Client.Post("https://www.ancient-orbit.de/api", loginString);
+            if (response.Contains("{\"status\":true,\""))
+            {
+                Console.WriteLine("Logged in waiting 5s ");
+                await Task.Delay(5000);
+            }
+            string SID;
+            response = Client.Get("https://ancient-orbit.de/map");
+            Match match = Regex.Match(response, "\"sessionID\": \"(.*?)\",");
+            if (match.Success)
+            {
+                User.UserData.SID = match.Groups[1].Value;
+                Console.WriteLine("got sid: " + User.UserData.SID);
+            }
+
+            match = Regex.Match(response, "\"userID\": \"(.*?)\",");
+            if (match.Success)
+            {
+                Console.WriteLine("got id: " + match.Groups[1].Value);
+                User.UserData.ID = int.Parse(match.Groups[1].Value);
+            }
+            User.PacketManager = new(this);
+            User.PacketManager.Connect("89.163.215.16", 7000);
+            RegisterEvents();
+            User.PacketManager.Send(new Login(userId: User.UserData.ID, SessionID: User.UserData.SID, instanceID: 1));
         }
     }
 }
