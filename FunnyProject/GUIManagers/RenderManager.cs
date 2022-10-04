@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FunnyProject.GUIManagers
 {
-    public class RenderManager
+    public class RenderManager : IDisposable
     {
         Graphics g { get; set; }
         Api Api { get; set; }
@@ -21,13 +21,14 @@ namespace FunnyProject.GUIManagers
             this.g = g;
             X = x;
             Y = y;
+            
         }
         private async Task DrawTarget()
         {
             if (Api.User.Target == null) return;
 
-            g.FillEllipse(Brushes.OrangeRed, (float)(Api.User.Target.X * ConvertX), (float)(Api.User.Target.Y * ConvertY), 10, 10);
-
+            g.FillEllipse(Brushes.OrangeRed,ReturnFloat(Api.User.Target.X * ConvertX), ReturnFloat(Api.User.Target.Y * ConvertY), 10, 10);
+            await Task.CompletedTask;
 
 
         }
@@ -43,7 +44,8 @@ namespace FunnyProject.GUIManagers
             {
                 foreach (var port in Api.User.BasesPorts.Ports)
                 {
-                    g.DrawEllipse(new Pen(Brushes.White), (float)(port.X * ConvertX), (float)(port.Y * ConvertY)-8 , 16 , 16 );
+                    g.DrawEllipse(new Pen(Brushes.White), (float)(port.X * ConvertX), (float)(port.Y * ConvertY) - 8 , 16 , 16 );
+                 
                 }
             }
             await Task.CompletedTask;
@@ -81,6 +83,7 @@ namespace FunnyProject.GUIManagers
         private async Task DrawTrajectory()
         {
             g.DrawLine(new Pen(Brushes.White) , (float)(Api.User.Position.X * ConvertX) + 5 , (float)(Api.User.Position.Y *ConvertY) -5,(float)(Api.User.Position.TargetX * ConvertX) +5 ,(float)(Api.User.Position.TargetY * ConvertY)-5);
+           
             await Task.CompletedTask;
         }
 
@@ -139,7 +142,6 @@ namespace FunnyProject.GUIManagers
             Tasks.Add(DrawAllyPlayers());
             Tasks.Add(DrawTarget());
             Tasks.Add(DrawUri());
-
             
             Tasks.Add(DrawPlayer());
 
@@ -152,6 +154,11 @@ namespace FunnyProject.GUIManagers
         private float ReturnFloat(object num)
         {
             return Convert.ToSingle(num);
+        }
+
+        public  void Dispose()
+        {
+            g.Dispose();
         }
     }
 }

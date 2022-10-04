@@ -16,6 +16,7 @@ namespace FunnyProject
         public int Uridium { get; set; }
         public string? Username { get; set; }
         public string? Password { get; set; }
+        public string? Server { get; set; }
         public PacketManager? PacketManager { get; set; }
 
         public UserData UserData = new();
@@ -29,6 +30,15 @@ namespace FunnyProject
 
         public Box? SelectedBox { get; set; }
         public Player? Target { get; set; }
+
+
+        public User(string name , string password , string server)
+        {
+            Username = name;
+            Password = password;
+            Server = server;
+
+        }
 
     }
 }

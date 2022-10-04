@@ -30,7 +30,6 @@ namespace FunnyProject
             Client = new HttpClient();
             Task.Run(async () => await UpdateTweener());
             Tweener = new();
-
         }
 
         private async Task UpdateTweener()
@@ -52,11 +51,10 @@ namespace FunnyProject
             }
         }
 
-        public async Task StartSession(string server)
+        public async Task StartSession()
         {
-            await Login(server);
+            await Login(User.Server);
            
-            
         }
 
         private void RegisterEvents()
@@ -67,8 +65,9 @@ namespace FunnyProject
             User.PacketManager.PlHandler.RegisterEvents();
         }
 
-        private async Task Login(string server)
+        private async Task Login(string? server)
         {
+            if (server == null) return;
            switch(server)
             {
                 case "starzone":
@@ -89,10 +88,7 @@ namespace FunnyProject
 
       
 
-        private void FinalOrbit()
-        {
-            throw new NotImplementedException();
-        }
+
 
    
 
@@ -134,7 +130,7 @@ namespace FunnyProject
             Client.userAgent = "PVPOnlyClient";
             var str = Client.Get("https://www.ancient-orbit.de/");
             string loginString = $"username={User.Username}&password={User.Password}&action=login";
-            Console.WriteLine(str);
+            
             var response = Client.Post("https://www.ancient-orbit.de/api", loginString);
             if (response.Contains("{\"status\":true,\""))
             {

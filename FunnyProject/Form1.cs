@@ -1,3 +1,4 @@
+using FunnyProject.Forms;
 using FunnyProject.GUIManagers;
 using FunnyProject.Interfaces;
 using FunnyProject.Logic;
@@ -14,76 +15,15 @@ namespace FunnyProject
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            SetDoubleBuffered(MinimapPanel);
-            
-            
+            ServerComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            ServerComboBox.SelectedIndex = 0;
+
+
+
         }
 
-        private void LoginBtn_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine("Login clicked");
-            var api = new Api(new User());
-            Api = api;
-            Api.User.Username = UserNameBox.Text;
-            Move = new(Api);
-            Api.User.Password = PasswordBox.Text;
-            var server = ServerCombo.SelectedItem.ToString();
-            LoginBtn.Visible = false;
-            
-            Task.Run(async () => await Api.StartSession(server));
-            ServerCombo.Visible = false;
-            UserNameBox.Visible = false;
-            PasswordBox.Visible = false;
-            Task.Run(async () => await Render());
-           
-        }
-
-        private async Task Render()
-        {
-            while(true)
-            {
-                try
-                {
-                    var bit = new Bitmap(MinimapPanel.Width, MinimapPanel.Height);
-                    using (Graphics g = Graphics.FromImage(bit))
-                    {
-                        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                        RenderManager rd = new RenderManager(g , Api ,bit.Width , bit.Height);
-                        await rd.Draw();
-                        var oldimage = MinimapPanel.BackgroundImage;
-                        if (MinimapPanel.InvokeRequired)
-                        {
-                            Invoke((MethodInvoker)delegate
-                            {
-                                MinimapPanel.BackgroundImage = bit;
-                            });
-                        }
-                        else
-                        {
-                            MinimapPanel.BackgroundImage = bit;
-                        }
-                        
-                        await Task.Delay(50);
-                        if(oldimage != null)
-                        {
-                            oldimage.Dispose();
-                        }
-                    }
-                    
-                    
-                    
-                }
-                catch(Exception ex)
-                {
-                    await Task.Delay(50);
-                    Console.WriteLine(ex);
-                }
-                
-            }
-
-
-           
-        }
+      
+       
         public static void SetDoubleBuffered(System.Windows.Forms.Control c)
         {
           
@@ -99,15 +39,7 @@ namespace FunnyProject
             aProp.SetValue(c, true, null);
         }
 
-        private void MinimapPanel_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (Move == null) return;
-            var ConvertX = ((double)MinimapPanel.Width / 21000);
-            var ConvertY = (double)MinimapPanel.Height / 13000;
-
-            Move.FlyToCorndinates((int)((double)e.X / ConvertX), (int)((double)e.Y / ConvertY));
-            Console.WriteLine((int)(e.X * ConvertX));
-        }
+   
 
         private void StartBtn_Click(object sender, EventArgs e)
         {
@@ -119,6 +51,28 @@ namespace FunnyProject
             box.Running = true;
             Task.Run(async() => await box.StartMethod());
             
+        }
+
+        private void LoginPage_Resize(object sender, EventArgs e)
+        {
+            UsernameBox.Location = new Point(LoginPage.Width / 2 - UsernameBox.Width / 2, LoginPage.Height / 2 - UsernameBox.Height / 2);
+            PasswordBox.Location = new Point(LoginPage.Width / 2 - PasswordBox.Width / 2, LoginPage.Height / 2 - PasswordBox.Height / 2 + 30);
+            LoginBtn.Location = new Point(LoginPage.Width / 2 - LoginBtn.Width / 2, LoginPage.Height / 2 - LoginBtn.Height / 2 + 90);
+            ServerComboBox.Location = new Point(LoginPage.Width / 2 - ServerComboBox.Width / 2, LoginPage.Height / 2 - ServerComboBox.Height / 2 + 60);
+        }
+
+        private void LoginBtn_Click(object sender, EventArgs e)
+        {
+            TabPage page = new TabPage();
+            UserWindow window = new UserWindow(new Api(new User(UsernameBox.Text , PasswordBox.Text , ServerComboBox.SelectedItem.ToString())));
+            page.Text = UsernameBox.Text;
+            window.Dock = DockStyle.Fill;
+            window.FormBorderStyle = FormBorderStyle.None;
+            window.TopLevel = false;
+            page.Controls.Add(window);
+            window.Show();
+            MainTabPage.TabPages.Add(page);
+            Refresh();
         }
     }
 }

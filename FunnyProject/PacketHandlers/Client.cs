@@ -67,7 +67,7 @@ namespace FunnyProject.PacketHandlers
 
             try
             {
-                if (Stream.Socket.Available > 3)
+                if (Stream.Socket.Available > 2)
                 {
                     var buffer = new byte[2];
                     Stream.Read(buffer, 0, 2);
