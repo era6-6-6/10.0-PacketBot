@@ -60,13 +60,24 @@ namespace FunnyProject.Forms
                             oldimage.Dispose();
                             rd.Dispose();
                         }
-                        
+                        if (UriLbl.InvokeRequired)
+                        {
+                            Invoke((MethodInvoker)delegate
+                            {
+                                UriLbl.Text = $"Uri: {Api.User.Statistics.CollectedUridium}/{Api.User.Statistics.Uridium}";
+                            });
+                        }
+                        else
+                        {
+                            UriLbl.Text = $"Uri: {Api.User.Statistics.CollectedUridium}/{Api.User.Statistics.Uridium}";
+                        }
+
                     }
                 }
                 catch (Exception ex)
                 {
                     await Task.Delay(50);
-                    Console.WriteLine(ex);
+                   
                 }
 
             }

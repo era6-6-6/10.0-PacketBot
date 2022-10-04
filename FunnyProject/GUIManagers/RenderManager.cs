@@ -110,11 +110,7 @@ namespace FunnyProject.GUIManagers
             }
             await Task.CompletedTask;
         }
-        private async Task DrawUri()
-        {
-            g.DrawString($"Uri:{Api.User.Statistics.CollectedUridium:n00}", new Font("helvetica" , 10) , Brushes.White , new PointF(0 , 0));
-            await Task.CompletedTask;
-        }
+    
         private async Task DrawAllyPlayers()
         {
             lock (Api.User.Players.AllyPlayers)
@@ -141,7 +137,7 @@ namespace FunnyProject.GUIManagers
             Tasks.Add(DrawEnemyPlayers());
             Tasks.Add(DrawAllyPlayers());
             Tasks.Add(DrawTarget());
-            Tasks.Add(DrawUri());
+            
             
             Tasks.Add(DrawPlayer());
 

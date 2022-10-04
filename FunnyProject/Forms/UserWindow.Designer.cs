@@ -35,10 +35,12 @@
             this.ActionPage = new System.Windows.Forms.TabPage();
             this.StartBtn = new System.Windows.Forms.Button();
             this.StatPage = new System.Windows.Forms.TabPage();
+            this.UriLbl = new System.Windows.Forms.Label();
             this.MainPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.InfoTab.SuspendLayout();
             this.ActionPage.SuspendLayout();
+            this.StatPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainPanel
@@ -104,6 +106,7 @@
             // 
             // StatPage
             // 
+            this.StatPage.Controls.Add(this.UriLbl);
             this.StatPage.Location = new System.Drawing.Point(4, 24);
             this.StatPage.Name = "StatPage";
             this.StatPage.Padding = new System.Windows.Forms.Padding(3);
@@ -111,6 +114,15 @@
             this.StatPage.TabIndex = 1;
             this.StatPage.Text = "Statistics";
             this.StatPage.UseVisualStyleBackColor = true;
+            // 
+            // UriLbl
+            // 
+            this.UriLbl.AutoSize = true;
+            this.UriLbl.Location = new System.Drawing.Point(6, 27);
+            this.UriLbl.Name = "UriLbl";
+            this.UriLbl.Size = new System.Drawing.Size(25, 15);
+            this.UriLbl.TabIndex = 0;
+            this.UriLbl.Text = "Uri:";
             // 
             // UserWindow
             // 
@@ -124,6 +136,8 @@
             this.panel1.ResumeLayout(false);
             this.InfoTab.ResumeLayout(false);
             this.ActionPage.ResumeLayout(false);
+            this.StatPage.ResumeLayout(false);
+            this.StatPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -137,5 +151,6 @@
         private TabPage ActionPage;
         private Button StartBtn;
         private TabPage StatPage;
+        private Label UriLbl;
     }
 }

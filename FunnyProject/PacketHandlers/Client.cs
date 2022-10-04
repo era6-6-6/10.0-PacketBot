@@ -95,7 +95,7 @@ namespace FunnyProject.PacketHandlers
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                
             }
         }
 
