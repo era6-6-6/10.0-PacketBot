@@ -58,15 +58,12 @@ namespace FunnyProject.Logic
                     FlyToCorndinates(Api.User.Target.X, Api.User.Target.Y);
 
                     
-                    //AttackNpc(Api.User.Target);
+                    
                     SellectAmmo();
                     bool init = true;
                     while (Api.User.Target != null)
                     {
-                        if (CalculateDistance(Api.User.Target.X, Api.User.Target.Y) > 2000)
-                        {
-                            Api.User.Players.Remove(Api.User.Target.ID);
-                        }
+                         
                         if (init)
                         {
                             AssignAngle();
@@ -74,7 +71,7 @@ namespace FunnyProject.Logic
                         }
                         if(!Api.User.Position.Moving)
                         {
-                            FlyToCorndinates(Api.User.Target.X + 400, Api.User.Target.Y);
+                            FlyToCorndinates(Api.User.Target.X + 500, Api.User.Target.Y);
                         }
                         await Task.Delay(250);
 

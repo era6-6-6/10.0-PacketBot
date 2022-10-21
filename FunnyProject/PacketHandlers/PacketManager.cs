@@ -19,7 +19,7 @@ namespace FunnyProject.PacketHandlers
         public ObjectsHandler ObjHandler { get; set; }
         public PlayersEventHandler PlHandler { get; set; }
         private SortPacket SortClass { get; set; }
-        public PacketManager(Api api)
+        public PacketManager(Api api) : base(api)
         {
             Api = api;
             Res = new(Api);

@@ -1,4 +1,5 @@
 ﻿using FunnyProject.GUIManagers;
+using FunnyProject.Logic;
 using FunnyProject.Logic.Interface;
 using System;
 using System.Collections.Generic;
@@ -88,9 +89,12 @@ namespace FunnyProject.Forms
 
         private void StartBtn_Click(object sender, EventArgs e)
         {
+            NpcKillerModule npc = new NpcKillerModule(Api);
+            FollowModule follow = new FollowModule(Api);
+            npc.Running = true;
             BoxLogic box = new BoxLogic(Api);
             box.Running = true;
-            Task.Run(async () => await box.StartMethod());
+            Task.Run(async () => await npc.StartMethod());
         }
 
         private void MinimapPanel_MouseDown(object sender, MouseEventArgs e)

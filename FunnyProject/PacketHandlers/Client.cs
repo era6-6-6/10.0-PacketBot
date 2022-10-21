@@ -16,11 +16,14 @@ namespace FunnyProject.PacketHandlers
     {
         TcpClient TcpClient { get; set; }
         NetworkStream? Stream { get; set; }
-        
-        public Client()
+        public Api Api;
+        public event EventHandler<EventArgs> Disconnected;
+
+
+        public Client(Api api)
         {
-            
-            
+
+            Api = api;
         }
         public void Send(Command com)
         {
@@ -28,7 +31,13 @@ namespace FunnyProject.PacketHandlers
         }
         private void Send(byte[] bytes)
         {
-            Stream.Write(bytes, 0, bytes.Length);
+            try
+            {
+                Stream.Write(bytes, 0, bytes.Length);
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
         public void Connect(string ip, int port)
         {
@@ -38,28 +47,42 @@ namespace FunnyProject.PacketHandlers
             {
                 Stream = TcpClient.GetStream();
                 Console.WriteLine("Got stream");
+
                 Task.Run(async () => await ListenForPackets());
                 
                 return;
             }
         }
+
+        private void Recconnect()
+        {
+            Discconnect();
+            Connect("89.163.215.16", 7000);
+            Api.User.PacketManager.Send(new Login(userId: Api.User.UserData.ID, SessionID: Api.User.UserData.SID, instanceID: 1));
+
+        }
+        private void Discconnect()
+        {
+            TcpClient.Close();
+            Stream.Close();
+        }
+
         private async Task ListenForPackets()
         {
             try
             {
                 while (IsConnected())
                 {
-                    if (Stream.DataAvailable)
-                    {
+                   
                         ParsePackets();
-                    }
+                    
                     
                 }
-
+                Disconnected?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
-
+                Disconnected?.Invoke(this, EventArgs.Empty);
             }
         }
         private void ParsePackets()
@@ -92,6 +115,7 @@ namespace FunnyProject.PacketHandlers
                         Parse(new EndianBinaryReader(EndianBitConverter.Big, new MemoryStream(buffer)));
                     }
                 }
+              
             }
             catch(Exception ex)
             {

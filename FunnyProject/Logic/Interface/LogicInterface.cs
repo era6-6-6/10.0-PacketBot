@@ -58,8 +58,8 @@ namespace FunnyProject.Logic.Interface
         protected Player? ClosestNpc()
         {
             Player? npc = null;
-           npc = Api.User.Players.Npcs.ToList().OrderBy(npc => CalculateDistance(new Point(npc.X, npc.Y))).FirstOrDefault();
-
+            npc = Api.User.Players.Npcs.ToList().OrderBy(npc => CalculateDistance(new Point(npc.X, npc.Y))).FirstOrDefault();
+            if (npc.Name.ToLower().Contains("sibelon")) return null;
             if (npc != null)
             {
                 return npc;
@@ -134,7 +134,7 @@ namespace FunnyProject.Logic.Interface
         }
         protected void SellectAmmo()
         {
-            SendPacket(new Action("ammunition_laser_ucb-100"));
+            SendPacket(new Action("ammunition_laser_mcb-25"));
         }
         private void FlyWithAnimation(int x, int y)
         {

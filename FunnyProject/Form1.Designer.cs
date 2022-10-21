@@ -81,7 +81,8 @@
             this.ServerComboBox.Items.AddRange(new object[] {
             "finalorbit",
             "starzone",
-            "ancientorbit"});
+            "ancientorbit",
+            "eternalorbit"});
             this.ServerComboBox.Location = new System.Drawing.Point(280, 245);
             this.ServerComboBox.Name = "ServerComboBox";
             this.ServerComboBox.Size = new System.Drawing.Size(210, 23);

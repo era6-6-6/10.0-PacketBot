@@ -37,7 +37,7 @@ namespace FunnyProject.Logic.Interface
 
                         FlyToCorndinates(Api.User.SelectedBox.X, Api.User.SelectedBox.Y);
                         if (Api.User.SelectedBox == null) continue;
-                        while (CalculateDistance(Api.User.SelectedBox.X, Api.User.SelectedBox.Y) > 50)
+                        while (CalculateDistance(Api.User.SelectedBox.X, Api.User.SelectedBox.Y) > 200)
                         {
 
                             await Task.Delay(200);
@@ -45,10 +45,11 @@ namespace FunnyProject.Logic.Interface
 
                         }
                         Api.User.PacketManager.Send(new CollectBox(Api.User.SelectedBox.Hash, Api.User.Position.X, Api.User.Position.Y, Api.User.SelectedBox.X, Api.User.SelectedBox.Y));
-                        int i = 0;
-                        await Task.Delay(100);
-                        Api.User.SelectedBox = null;
+                        
+                        
                         Api.User.Boxes.Remove(Api.User.SelectedBox?.Hash);
+                        Api.User.SelectedBox = null;
+                        
 
                         //while (Api.User.SelectedBox != null && i < 10)
                         //{
@@ -57,7 +58,6 @@ namespace FunnyProject.Logic.Interface
                         //}
 
                         Api.User.Boxes.Remove(Api.User.SelectedBox?.Hash);
-
                         
                     }
 
