@@ -50,13 +50,14 @@ namespace FunnyProject.EventsHandler
 
         private void RemovePlayerFromMap(RemovePlayerFromMap e)
         {
+            
             Api.User.Players.Remove(e.UserID);
             if (e.UserID == Api.User.Target.ID) Api.User.Target = null;
+
         }
 
         private void RemovePlayer(RemovePlayer e)
         {
-            
             Api.User.Players.Remove(e.UserID);
             if (e.UserID == Api.User.Target.ID) Api.User.Target = null;
         }

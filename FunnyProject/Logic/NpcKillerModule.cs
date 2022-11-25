@@ -1,5 +1,6 @@
 ﻿using FunnyProject.Commands.Write;
 using FunnyProject.Logic.Interface;
+using FunnyProject.UserCollections.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,62 +29,68 @@ namespace FunnyProject.Logic
                         Random r = new Random();
                         FlyToCorndinates(r.Next(0, 21000), r.Next(0, 13000));
                     }
-                    //    await Task.Delay(50);
-                    //    Api.User.SelectedBox = ClosestBox();
-                    //    if (Api.User.SelectedBox == null) continue;
-                    //    FlyToCorndinates(Api.User.SelectedBox.X, Api.User.SelectedBox.Y);
-                    //    if (Api.User.SelectedBox == null) continue;
-                    //    while (CalculateDistance(Api.User.SelectedBox.X, Api.User.SelectedBox.Y) > 50)
-                    //    {
+                    if((double)Api.User.ShipInfo.Hp / Api.User.ShipInfo.MaxHp * 100 < 30)
+                    {
+                        var port = Api.User.BasesPorts.Ports.OrderBy(x => CalculateDistance(x.X, x.Y)).FirstOrDefault();
+                        FlyToCorndinates(port.X, port.Y);
+                        while(Api.User.ShipInfo.Hp < Api.User.ShipInfo.MaxHp)
+                        {
+                            await Task.Delay(300);
+                        }
+                    }
+                    Player? npc = ClosestNpc();
+                   
+                    if (npc == null) continue;
+                    Api.User.Target = npc;
+                    await Task.Delay(210);
+                    FlyToCorndinates(npc.X, npc.Y);
 
-                    //        await Task.Delay(100);
-
-                    //    }
-                    //    Api.User.PacketManager.Send(new CollectBox(Api.User.SelectedBox.Hash, Api.User.Position.X, Api.User.Position.Y, Api.User.SelectedBox.X, Api.User.SelectedBox.Y));
-                    //    int i = 0;
-                    //    while (Api.User.SelectedBox != null && i < 10)
-                    //    {
-                    //        await Task.Delay(50);
-                    //        i++;
-                    //    }
-
-                    //    Api.User.Boxes.Remove(Api.User.SelectedBox?.Hash);
-
-
-                    //}
-                    Api.User.Target = ClosestNpc();
-                    if (Api.User.Target == null) continue;
-                    SendPacket(new SelectShip(Api.User.Target.ID , Api.User.Position.X , Api.User.Position.Y, Api.User.Target.X, Api.User.Target.Y));
-                    await Task.Delay(100);
-                    FlyToCorndinates(Api.User.Target.X, Api.User.Target.Y);
-
-                    
-                    
+                    while (CalculateDistance(npc.X, npc.Y) > 1000)
+                    {
+                        await Task.Delay(200);
+                        FlyToCorndinates(Api.User.Target.X, Api.User.Target.Y);
+                    }
+                    SendPacket(new SelectShip(npc.ID, npc.X, npc.Y, Api.User.Position.X, Api.User.Position.Y));
                     SellectAmmo();
-                    bool init = true;
+                    
+               
                     while (Api.User.Target != null)
                     {
-                         
-                        if (init)
-                        {
-                            AssignAngle();
-                            init = false;
-                        }
-                        if(!Api.User.Position.Moving)
-                        {
-                            FlyToCorndinates(Api.User.Target.X + 500, Api.User.Target.Y);
-                        }
-                        await Task.Delay(250);
+                      
+                        SellectAmmo();
+                        
+                            Circle(Api.User.Target.X, Api.User.Target.Y);
 
+
+                        if ((double)Api.User.ShipInfo.Hp / Api.User.ShipInfo.MaxHp * 100 < 30)
+                        {
+                            Radius = 3000;
+                            await Task.Delay(500);
+                        }
+                        else if ((double)Api.User.ShipInfo.Hp / Api.User.ShipInfo.MaxHp * 100 >= 90)
+                        {
+                            Radius = 500;
+                            
+                        }
+                        await Task.Delay(200);
+                       
+                        
+                        
                     }
 
 
                 }
-                catch
+                catch(Exception ex)
                 {
                     
                 }
+                await Task.Delay(20);
             }
+        }
+
+        private void CheckHp()
+        {
+            
         }
     }
 }

@@ -33,6 +33,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.InfoTab = new System.Windows.Forms.TabControl();
             this.ActionPage = new System.Windows.Forms.TabPage();
+            this.BoxCheckBox = new System.Windows.Forms.CheckBox();
+            this.NpcBox = new System.Windows.Forms.CheckBox();
             this.StartBtn = new System.Windows.Forms.Button();
             this.StatPage = new System.Windows.Forms.TabPage();
             this.UriLbl = new System.Windows.Forms.Label();
@@ -85,6 +87,8 @@
             // 
             // ActionPage
             // 
+            this.ActionPage.Controls.Add(this.BoxCheckBox);
+            this.ActionPage.Controls.Add(this.NpcBox);
             this.ActionPage.Controls.Add(this.StartBtn);
             this.ActionPage.Location = new System.Drawing.Point(4, 24);
             this.ActionPage.Name = "ActionPage";
@@ -93,6 +97,28 @@
             this.ActionPage.TabIndex = 0;
             this.ActionPage.Text = "Action";
             this.ActionPage.UseVisualStyleBackColor = true;
+            // 
+            // BoxCheckBox
+            // 
+            this.BoxCheckBox.AutoSize = true;
+            this.BoxCheckBox.Location = new System.Drawing.Point(39, 70);
+            this.BoxCheckBox.Name = "BoxCheckBox";
+            this.BoxCheckBox.Size = new System.Drawing.Size(46, 19);
+            this.BoxCheckBox.TabIndex = 2;
+            this.BoxCheckBox.Text = "box";
+            this.BoxCheckBox.UseVisualStyleBackColor = true;
+            this.BoxCheckBox.CheckedChanged += new System.EventHandler(this.BoxCheckBox_CheckedChanged);
+            // 
+            // NpcBox
+            // 
+            this.NpcBox.AutoSize = true;
+            this.NpcBox.Location = new System.Drawing.Point(38, 46);
+            this.NpcBox.Name = "NpcBox";
+            this.NpcBox.Size = new System.Drawing.Size(53, 19);
+            this.NpcBox.TabIndex = 1;
+            this.NpcBox.Text = "Npcs";
+            this.NpcBox.UseVisualStyleBackColor = true;
+            this.NpcBox.CheckedChanged += new System.EventHandler(this.NpcBox_CheckedChanged);
             // 
             // StartBtn
             // 
@@ -136,6 +162,7 @@
             this.panel1.ResumeLayout(false);
             this.InfoTab.ResumeLayout(false);
             this.ActionPage.ResumeLayout(false);
+            this.ActionPage.PerformLayout();
             this.StatPage.ResumeLayout(false);
             this.StatPage.PerformLayout();
             this.ResumeLayout(false);
@@ -152,5 +179,7 @@
         private Button StartBtn;
         private TabPage StatPage;
         private Label UriLbl;
+        private CheckBox BoxCheckBox;
+        private CheckBox NpcBox;
     }
 }

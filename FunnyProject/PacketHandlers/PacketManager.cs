@@ -59,6 +59,11 @@ namespace FunnyProject.PacketHandlers
                         OnHeroInit?.Invoke(this, hero);
                         break;
                     }
+                case UpdateHp.ID:
+                    {
+                        UpdateHp hp = new UpdateHp(read);
+                        break;
+                    }
                 case 4224:
                     {
                         var message = read.ReadString();

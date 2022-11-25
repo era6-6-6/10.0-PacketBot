@@ -59,7 +59,8 @@ namespace FunnyProject.Logic.Interface
         {
             Player? npc = null;
             npc = Api.User.Players.Npcs.ToList().OrderBy(npc => CalculateDistance(new Point(npc.X, npc.Y))).FirstOrDefault();
-            if (npc.Name.ToLower().Contains("sibelon")) return null;
+            if (npc == null) return null;
+            
             if (npc != null)
             {
                 return npc;
@@ -119,12 +120,13 @@ namespace FunnyProject.Logic.Interface
             FlyToCorndinates((int)pos.X, (int)pos.Y);
 
         }
+        public int Radius = 500;
         public void Circle(int x, int y)
         {
-            var pos = CircleAround(5000, angle, new PointF(x, y));
+            var pos = CircleAround(Radius, angle, new PointF(x, y));
             if (angle < 360)
             {
-                angle += 6.5f;
+                angle += 7.5f;
             }
             else
             {
@@ -134,7 +136,7 @@ namespace FunnyProject.Logic.Interface
         }
         protected void SellectAmmo()
         {
-            SendPacket(new Action("ammunition_laser_mcb-25"));
+            SendPacket(new Action("ammunition_laser_ucb-100"));
         }
         private void FlyWithAnimation(int x, int y)
         {

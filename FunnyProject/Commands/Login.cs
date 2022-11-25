@@ -10,7 +10,7 @@ namespace FunnyProject.Commands
     public class Login : Command
     {
         public const short ID = 10996;
-        public Login(int instanceID = 69, int userId = 1469, short FactionId = 0, string SessionID = "hGmwf36gLobdrNMLOAMuYOfk97h5LAwz", string version = "8.3.2")
+        public Login(int instanceID = 563, int userId = 1469, short FactionId = 0, string SessionID = "hGmwf36gLobdrNMLOAMuYOfk97h5LAwz", string version = "8.3.2")
         {
             param1.writeShort(53);
             param1.writeShort(ID);

@@ -94,7 +94,14 @@ namespace FunnyProject.Forms
             npc.Running = true;
             BoxLogic box = new BoxLogic(Api);
             box.Running = true;
-            Task.Run(async () => await npc.StartMethod());
+            if (NpcBox.Checked)
+            {
+                Task.Run(async () => await npc.StartMethod());
+            }
+            else
+            {
+                Task.Run(async () => await box.StartMethod());
+            }
         }
 
         private void MinimapPanel_MouseDown(object sender, MouseEventArgs e)
@@ -104,6 +111,27 @@ namespace FunnyProject.Forms
             var ConvertY = (double)MinimapPanel.Height / 13000;
 
             Move.FlyToCorndinates((int)((double)e.X / ConvertX), (int)((double)e.Y / ConvertY));
+            
+        }
+
+        private void BoxCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if(NpcBox.Checked)
+            {
+                MessageBox.Show("you have already selected npc killer please unselect it");
+                return;
+            }
+            
+            
+        }
+
+        private void NpcBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (BoxCheckBox.Checked)
+            {
+                MessageBox.Show("you have already selected box collector please unselect it");
+                return;
+            }
             
         }
     }

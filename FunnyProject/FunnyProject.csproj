@@ -12,4 +12,10 @@
     <Folder Include="GameCollection\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="2captcha-csharp" Version="1.1.3" />
+    <PackageReference Include="CaptchaSharp" Version="1.0.10" />
+    <PackageReference Include="MainSoftLib.TwoCaptcha.Api" Version="1.4.8" />
+  </ItemGroup>
+
 </Project>

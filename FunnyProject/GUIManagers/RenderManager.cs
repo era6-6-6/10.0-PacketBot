@@ -80,6 +80,27 @@ namespace FunnyProject.GUIManagers
             g.DrawLine(new Pen(Brushes.LightBlue, 15), 210, Y - 18, 210 - (2 * (100 - shd)), Y - 18);
             await Task.CompletedTask;
         }
+
+        private async Task RenderNpcHp()
+        {
+            if (Api.User.Target == null) return;
+            g.DrawLine(new Pen(Brushes.DarkRed, 15), X-210, Y - 40, X-10, Y - 40);
+            var hp = (int)((double)Api.User.Target.HP / Api.User.Target.MaxHP * 100);
+            g.DrawLine(new Pen(Brushes.IndianRed, 15), X-10, Y - 40, (X - 10) - (2 * (100 - hp)), Y - 40);
+            
+            g.DrawLine(new Pen(Brushes.DarkBlue, 15), X-210, Y - 18, X-10, Y - 18);
+            int shd = 0;
+            if (Api.User.Target.Shield == 0 || Api.User.Target.MaxShield == 0)
+            {
+                shd = 100;
+            }
+            else
+            {
+                shd = (int)((double)Api.User.Target.Shield / Api.User.Target.MaxShield * 100);
+            }
+            g.DrawLine(new Pen(Brushes.LightBlue, 15), X-210, Y - 18, X-210 - (2 * (100 - shd)), Y - 18);
+            await Task.CompletedTask;
+        }
         private async Task DrawTrajectory()
         {
             g.DrawLine(new Pen(Brushes.White) , (float)(Api.User.Position.X * ConvertX) + 5 , (float)(Api.User.Position.Y *ConvertY) -5,(float)(Api.User.Position.TargetX * ConvertX) +5 ,(float)(Api.User.Position.TargetY * ConvertY)-5);
@@ -137,6 +158,7 @@ namespace FunnyProject.GUIManagers
             Tasks.Add(DrawEnemyPlayers());
             Tasks.Add(DrawAllyPlayers());
             Tasks.Add(DrawTarget());
+            Tasks.Add(RenderNpcHp());
             
             
             Tasks.Add(DrawPlayer());

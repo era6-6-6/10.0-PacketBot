@@ -58,7 +58,7 @@ namespace FunnyProject.PacketHandlers
         {
             Discconnect();
             Connect("89.163.215.16", 7000);
-            Api.User.PacketManager.Send(new Login(userId: Api.User.UserData.ID, SessionID: Api.User.UserData.SID, instanceID: 1));
+            Api.User.PacketManager.Send(new Login(userId: 165, SessionID: Api.User.UserData.SID, instanceID: 563));
 
         }
         private void Discconnect()
@@ -73,10 +73,7 @@ namespace FunnyProject.PacketHandlers
             {
                 while (IsConnected())
                 {
-                   
-                        ParsePackets();
-                    
-                    
+                    ParsePackets();
                 }
                 Disconnected?.Invoke(this, EventArgs.Empty);
             }
